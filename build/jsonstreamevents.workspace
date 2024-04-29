@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_workspace_file>
+	<Workspace title="jsonstreamevents">
+		<Project filename="libjsonstreamevents_libyajl_static.cbp" />
+		<Project filename="libjsonstreamevents_libyajl_shared.cbp" />
+		<Project filename="libjsonstreamevents_liblaxjson_static.cbp" />
+		<Project filename="libjsonstreamevents_liblaxjson_shared.cbp" />
+	</Workspace>
+</CodeBlocks_workspace_file>
