@@ -5,5 +5,14 @@
 		<Project filename="libjsonstreamevents_libyajl_shared.cbp" />
 		<Project filename="libjsonstreamevents_liblaxjson_static.cbp" />
 		<Project filename="libjsonstreamevents_liblaxjson_shared.cbp" />
+		<Project filename="jsonstreamevents_show_data.cbp">
+			<Depends filename="libjsonstreamevents_libyajl_shared.cbp" />
+		</Project>
+		<Project filename="jsonstreamevents_manual_match.cbp">
+			<Depends filename="libjsonstreamevents_libyajl_shared.cbp" />
+		</Project>
+		<Project filename="jsonstreamevents_match.cbp">
+			<Depends filename="libjsonstreamevents_libyajl_shared.cbp" />
+		</Project>
 	</Workspace>
 </CodeBlocks_workspace_file>

@@ -1,0 +1,10 @@
+# depslib dependency file v1.0
+1714503184 source:z:\jsonstreamevents\examples\jsonstreamevents_show_data.c
+	"jsonstreamevents.h"
+	<stdlib.h>
+	<string.h>
+	<stdio.h>
+
+1714410731 z:\jsonstreamevents\include\jsonstreamevents.h
+	<stdlib.h>
+

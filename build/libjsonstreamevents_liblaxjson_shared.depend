@@ -1,0 +1,12 @@
+# depslib dependency file v1.0
+1714410731 source:z:\jsonstreamevents\src\jsonstreamevents.c
+	"jsonstreamevents.h"
+	<string.h>
+	<stdio.h>
+	<yajl/yajl_parse.h>
+	<yajl/yajl_gen.h>
+	<laxjson.h>
+
+1714410731 z:\jsonstreamevents\include\jsonstreamevents.h
+	<stdlib.h>
+
