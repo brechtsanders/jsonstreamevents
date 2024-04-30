@@ -1,0 +1,34 @@
+[
+  {
+    "name": "LICENSE",
+    "path": "LICENSE",
+    "sha": "de050d634f5c35c58cddffa1fb97ed595cf53e49",
+    "size": 1071,
+    "url": "https://api.github.com/repos/brechtsanders/jsonstreamevents/contents/LICENSE?ref=main",
+    "html_url": "https://github.com/brechtsanders/jsonstreamevents/blob/main/LICENSE",
+    "git_url": "https://api.github.com/repos/brechtsanders/jsonstreamevents/git/blobs/de050d634f5c35c58cddffa1fb97ed595cf53e49",
+    "download_url": "https://raw.githubusercontent.com/brechtsanders/jsonstreamevents/main/LICENSE",
+    "type": "file",
+    "_links": {
+      "self": "https://api.github.com/repos/brechtsanders/jsonstreamevents/contents/LICENSE?ref=main",
+      "git": "https://api.github.com/repos/brechtsanders/jsonstreamevents/git/blobs/de050d634f5c35c58cddffa1fb97ed595cf53e49",
+      "html": "https://github.com/brechtsanders/jsonstreamevents/blob/main/LICENSE"
+    }
+  },
+  {
+    "name": "README.md",
+    "path": "README.md",
+    "sha": "da497c2fc33af23ba57ce403fe7716276a456ec3",
+    "size": 420,
+    "url": "https://api.github.com/repos/brechtsanders/jsonstreamevents/contents/README.md?ref=main",
+    "html_url": "https://github.com/brechtsanders/jsonstreamevents/blob/main/README.md",
+    "git_url": "https://api.github.com/repos/brechtsanders/jsonstreamevents/git/blobs/da497c2fc33af23ba57ce403fe7716276a456ec3",
+    "download_url": "https://raw.githubusercontent.com/brechtsanders/jsonstreamevents/main/README.md",
+    "type": "file",
+    "_links": {
+      "self": "https://api.github.com/repos/brechtsanders/jsonstreamevents/contents/README.md?ref=main",
+      "git": "https://api.github.com/repos/brechtsanders/jsonstreamevents/git/blobs/da497c2fc33af23ba57ce403fe7716276a456ec3",
+      "html": "https://github.com/brechtsanders/jsonstreamevents/blob/main/README.md"
+    }
+  }
+]
