@@ -5,3 +5,8 @@ build/bin/
 *.o
 *.zip
 *.url
+*.def
+*.dll
+*.xz
+*.a
+version
