@@ -82,14 +82,14 @@ jobs:
           git
           mingw-w64-${{ matrix.config.arch }}-yajl
     - uses: actions/checkout@v1
-    - if: matrix.config.os == 'ubuntu-latest'
-      name: Build (liblaxjson)
-      run: |
-        make EXAMPLE=1 LAXJSON=1
-    - if: matrix.config.os == 'ubuntu-latest'
-      name: Clean (liblaxjson)
-      run: |
-        make clean EXAMPLE=1 LAXJSON=1
+#    - if: matrix.config.os == 'ubuntu-latest'
+#      name: Build (liblaxjson)
+#      run: |
+#        make EXAMPLE=1 LAXJSON=1
+#    - if: matrix.config.os == 'ubuntu-latest'
+#      name: Clean (liblaxjson)
+#      run: |
+#        make clean EXAMPLE=1 LAXJSON=1
     - name: Build (yajl)
       run: |
-        make EXAMPLE=1 PREFIX=$PWD/inst
+        make install PREFIX=$PWD/inst EXAMPLE=1 CFLAGS="-I/usr/include"
