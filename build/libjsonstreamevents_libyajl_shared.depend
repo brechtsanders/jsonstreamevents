@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1714410731 source:z:\jsonstreamevents\src\jsonstreamevents.c
+1714576616 source:z:\jsonstreamevents\src\jsonstreamevents.c
 	"jsonstreamevents.h"
 	<string.h>
 	<stdio.h>
@@ -7,6 +7,6 @@
 	<yajl/yajl_gen.h>
 	<laxjson.h>
 
-1714410731 z:\jsonstreamevents\include\jsonstreamevents.h
+1714572692 z:\jsonstreamevents\include\jsonstreamevents.h
 	<stdlib.h>
 

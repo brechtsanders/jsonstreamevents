@@ -239,7 +239,7 @@ DLL_EXPORT_JSONSTREAMEVENTS const char* jsonstreamevents_parse_done (jsonstreame
 /*! \brief minor version number */
 #define JSONSTREAMEVENTS_VERSION_MINOR 1
 /*! \brief micro version number */
-#define JSONSTREAMEVENTS_VERSION_MICRO 0
+#define JSONSTREAMEVENTS_VERSION_MICRO 1
 /*! @} */
 
 /*! \brief packed version number */

@@ -1,3 +1,9 @@
+0.1.1
+
+2024-05-01  Brecht Sanders  https://github.com/brechtsanders/
+
+  * don't use recursive function in jsonstreamevents_parent_matches_chain() and jsonstreamevents_property_matches_chain()
+  
 0.1.0
 
 2024-05-01  Brecht Sanders  https://github.com/brechtsanders/

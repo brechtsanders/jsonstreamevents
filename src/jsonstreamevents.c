@@ -89,33 +89,35 @@ static inline void parser_data_remove_parent (struct jsonstreamevents_status_str
 
 
 
-int jsonstreamevents_parent_check_match (struct jsonstreamevents_node_struct* parent, unsigned int nodechainlen, const char* nodechain[], unsigned int pos)
+int jsonstreamevents_parent_check_match (struct jsonstreamevents_node_struct* parent, int exactmatch, unsigned int nodechainlen, const char* nodechain[])
 {
-  if (pos >= nodechainlen)
-    return -1;
+  unsigned int pos;
+  int result;
+  struct jsonstreamevents_node_struct* node = parent;
   if (nodechainlen == 0)
     return 0;
-  if (pos > 0) {
-    int result;
-    if (!parent->parent)
+  pos = nodechainlen;
+  while (pos-- > 0) {
+    if (node == NULL)
       return -1;
-    if ((result = jsonstreamevents_parent_check_match(parent->parent, nodechainlen, nodechain, pos - 1)) != 0)
+    if (node->name == NULL) {
+      if (nodechain[pos] != NULL)
+        return -1;
+    } else if (nodechain[pos] == NULL) {
+        return 1;
+    } else if ((result = strcmp(parent->name, nodechain[pos])) != 0) {
       return result;
+    }
+    node = node->parent;
   }
-  if (!parent || parent->name == NULL)
-    return (nodechain[pos] == NULL ? 0 : 1);
-  if (nodechain[pos] == NULL)
+  if (exactmatch && node != NULL)
     return 1;
-  return strcmp(parent->name, nodechain[pos]);
+  return 0;
 }
 
 DLL_EXPORT_JSONSTREAMEVENTS int jsonstreamevents_parent_matches_chain (struct jsonstreamevents_status_struct* parserdata, unsigned int nodechainlen, const char* nodechain[])
 {
-  int result;
-  if (nodechainlen < 1)
-    return -1;
-  result = jsonstreamevents_parent_check_match(parserdata->parent, nodechainlen, nodechain, nodechainlen - 1);
-  return result;
+  return jsonstreamevents_parent_check_match(parserdata->parent, 1, nodechainlen, nodechain);
 }
 
 //usage example: if (jsonstreamevents_property_matches(parserdata, 3, (const char*[]){NULL, "owner", "login"}) == 0) printf("*owner login\n");
@@ -128,7 +130,8 @@ DLL_EXPORT_JSONSTREAMEVENTS int jsonstreamevents_property_matches_chain (struct 
     if (nodechain[nodechainlen - 1] != NULL)
       return 1;
   } else if (nodechain[nodechainlen - 1] == NULL) {
-    return 1;
+    /*if (parserdata->property != NULL)*/
+      return 1;
   } else {
     if ((result = strcmp(parserdata->property, nodechain[nodechainlen - 1])) != 0)
       return result;
@@ -136,7 +139,7 @@ DLL_EXPORT_JSONSTREAMEVENTS int jsonstreamevents_property_matches_chain (struct 
   if (nodechainlen > 1) {
     if (!parserdata->parent)
       return -1;
-    result = jsonstreamevents_parent_check_match(parserdata->parent, nodechainlen, nodechain, nodechainlen - 2);
+    result = jsonstreamevents_parent_check_match(parserdata->parent, 1, nodechainlen - 1, nodechain);
   }
   return result;
 }
