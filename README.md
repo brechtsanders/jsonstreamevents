@@ -1,4 +1,6 @@
 # jsonstreamevents 
+![Build CI workflow](https://github.com/brechtsanders/jsonstreamevents/actions/workflows/jsonstreamevents.yml/badge.svg)
+
 Cross-platform C library to parse JSON files while calling callback functions.
 
 ## Goal
