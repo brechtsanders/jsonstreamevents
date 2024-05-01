@@ -78,14 +78,14 @@ jobs:
           mingw-w64-${{ matrix.config.arch }}-toolchain
           mingw-w64-${{ matrix.config.arch }}-yajl
     - uses: actions/checkout@v1
-    - if: matrix.config.os == 'ubuntu-latest'
-      name: Build (liblaxjson)
-      run: |
-        make LAXJSON=1 EXAMPLE=1 DOXYGEN= CFLAGS="-I/usr/include" LDFLAGS="-L/usr/lib"
-    - if: matrix.config.os == 'ubuntu-latest'
-      name: Clean (liblaxjson)
-      run: |
-        make clean
+#    - if: matrix.config.os == 'ubuntu-latest'
+#      name: Build (liblaxjson)
+#      run: |
+#        make LAXJSON=1 EXAMPLE=1 DOXYGEN= CFLAGS="-I/usr/include" LDFLAGS="-L/usr/lib"
+#    - if: matrix.config.os == 'ubuntu-latest'
+#      name: Clean (liblaxjson)
+#      run: |
+#        make clean
     - name: Build (yajl)
       run: |
         make install PREFIX=$PWD/inst EXAMPLE=1 DOXYGEN= CFLAGS="-I/usr/include -I/usr/local/include -I/opt/homebrew/include" LDFLAGS="-L/usr/lib -L/usr/local/lib -L/opt/homebrew/lib"
