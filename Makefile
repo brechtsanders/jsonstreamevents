@@ -3,7 +3,6 @@ OS = $(shell uname -s)
 endif
 PREFIX = /usr/local
 CC   = gcc
-CPP  = g++
 AR   = ar
 LIBPREFIX = lib
 LIBEXT = .a
@@ -20,9 +19,8 @@ BINEXT =
 SOLIBPREFIX = lib
 SOEXT = .so
 endif
-INCS = -Iinclude
-CFLAGS = $(INCS) -Os
-CPPFLAGS = $(INCS) -Os
+CFLAGS = -Os
+CFLAGS += -Iinclude
 STATIC_CFLAGS = -DBUILD_JSONSTREAMEVENTS_STATIC
 SHARED_CFLAGS = -DBUILD_JSONSTREAMEVENTS_DLL
 LIBS =
