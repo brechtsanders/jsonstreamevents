@@ -1,0 +1,95 @@
+name: GitHub-CI for jsonstreamevents
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false          # don't abort other jobs if a job fails
+      matrix:
+        config:
+          - {
+              name: "Ubuntu Linux (gcc)",
+              os: ubuntu-latest,
+              arch: amd64,
+              shell: bash,
+              cc: gcc,
+              cxx: g++
+            }
+          - {
+              name: "Ubuntu Linux (clang)",
+              os: ubuntu-latest,
+              arch: arm64,
+              shell: bash,
+              cc: clang,
+              cxx: clang++
+            }
+          - {
+              name: "macOS (clang)",
+              os: macos-latest,
+              shell: bash,
+              cc: clang,
+              cxx: clang++
+            }
+          - {
+              name: "Windows 64-bit (gcc)",
+              os: windows-latest,
+              shell: 'msys2 {0}',
+              msystem: MINGW64,
+              arch: x86_64,
+              cc: x86_64-w64-mingw32-gcc.exe,
+              cxx: x86_64-w64-mingw32-g++.exe
+            }
+          - {
+              name: "Windows 32-bit (gcc)",
+              os: windows-latest,
+              shell: 'msys2 {0}',
+              msystem: MINGW32,
+              arch: i686,
+              cc: i686-w64-mingw32-gcc.exe,
+              cxx: i686-w64-mingw32-g++.exe
+            }
+    name: ${{ matrix.config.name }}
+    runs-on: ${{ matrix.config.os }}
+    defaults:
+      run:
+        shell: ${{ matrix.config.shell }}
+    env:
+      CC: ${{ matrix.config.cc }}
+      CXX: ${{ matrix.config.cxx }}
+
+    steps:
+    - if: matrix.config.os == 'ubuntu-latest'
+      name: Install build dependencies (Linux)
+      run: |
+        sudo apt-get install libyajl-dev
+#        sudo apt-get install libyajl-dev liblaxjson-dev
+    - if: matrix.config.os == 'macos-latest'
+      name: Install build dependencies (macOS)
+      run: |
+        brew install yajl
+    - if: matrix.config.os == 'windows-latest'
+      name: Install build dependencies (Windows)
+      uses: msys2/setup-msys2@v2
+      with:
+        update: false
+        msystem: ${{ matrix.config.msystem }}
+        install: >-
+          git
+          mingw-w64-${{ matrix.config.arch }}-yajl
+    - uses: actions/checkout@v1
+    - if: matrix.config.os == 'ubuntu-latest'
+      name: Build (liblaxjson)
+      run: |
+        make EXAMPLE=1 LAXJSON=1
+    - if: matrix.config.os == 'ubuntu-latest'
+      name: Clean (liblaxjson)
+      run: |
+        make clean EXAMPLE=1 LAXJSON=1
+    - name: Build (yajl)
+      run: |
+        make EXAMPLE=1 PREFIX=$PWD/inst

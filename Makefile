@@ -63,14 +63,19 @@ else
 OS_LINK_FLAGS = -shared -Wl,-soname,$@ $(STRIPFLAG)
 endif
 
-YAJL_CFLAGS = -DUSE_LIBYAJL
+YAJL_CFLAGS =
 YAJL_LDFLAGS = -lyajl
 
-LAXJSON_CFLAGS = -DLIBLAXJSON
+LAXJSON_CFLAGS =
 LAXJSON_LDFLAGS = -llaxjson
 
-CFLAGS += $(YAJL_CFLAGS)
+ifeq ($(LAXJSON),)
+CFLAGS += -DUSE_LIBYAJL $(YAJL_CFLAGS)
 LDFLAGS += $(YAJL_LDFLAGS)
+else
+CFLAGS += -DLIBLAXJSON $(LAXJSON_CFLAGS)
+LDFLAGS += $(LAXJSON_LDFLAGS)
+endif
 
 UTILS_BIN = 
 EXAMPLES_BIN = examples/jsonstreamevents_show_data$(BINEXT) examples/jsonstreamevents_manual_match$(BINEXT) examples/jsonstreamevents_match$(BINEXT)
