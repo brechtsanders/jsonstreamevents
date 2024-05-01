@@ -81,7 +81,7 @@ jobs:
 #    - if: matrix.config.os == 'ubuntu-latest'
 #      name: Build (liblaxjson)
 #      run: |
-#        make EXAMPLE=1 LAXJSON=1
+#        make LAXJSON=1 EXAMPLE=1 DOXYGEN= CFLAGS="-I/usr/include" LDFLAGS="-L/usr/lib"
 #    - if: matrix.config.os == 'ubuntu-latest'
 #      name: Clean (liblaxjson)
 #      run: |
