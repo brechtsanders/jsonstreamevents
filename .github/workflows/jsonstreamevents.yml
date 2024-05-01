@@ -92,4 +92,4 @@ jobs:
 #        make clean EXAMPLE=1 LAXJSON=1
     - name: Build (yajl)
       run: |
-        make install PREFIX=$PWD/inst EXAMPLE=1 CFLAGS="-I/usr/include"
+        make install PREFIX=$PWD/inst EXAMPLE=1 DOXYGEN= CFLAGS="-I/usr/include"
