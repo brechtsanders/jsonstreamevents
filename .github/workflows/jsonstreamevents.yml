@@ -81,6 +81,7 @@ jobs:
         install: >-
           git
           make
+          mingw-w64-${{ matrix.config.arch }}-toolchain
           mingw-w64-${{ matrix.config.arch }}-yajl
     - uses: actions/checkout@v1
 #    - if: matrix.config.os == 'ubuntu-latest'
