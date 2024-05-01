@@ -72,17 +72,18 @@ LAXJSON_LDFLAGS = -llaxjson
 CFLAGS += $(YAJL_CFLAGS)
 LDFLAGS += $(YAJL_LDFLAGS)
 
-UTILS_BIN = src/jsonstreamevents$(BINEXT)
+UTILS_BIN = 
+EXAMPLES_BIN = examples/jsonstreamevents_show_data$(BINEXT) examples/jsonstreamevents_manual_match$(BINEXT) examples/jsonstreamevents_match$(BINEXT)
 
 COMMON_PACKAGE_FILES = README.md LICENSE Changelog.txt
 SOURCE_PACKAGE_FILES = $(COMMON_PACKAGE_FILES) Makefile doc/Doxyfile include/*.h src/*.c build/*.workspace build/*.cbp build/*.depend
 
 default: all
 
-all: static-lib shared-lib utils
+all: static-lib shared-lib utils examples
 
-%.o: %.c
-	$(CC) -c -o $@ $< $(CFLAGS) 
+#%.o: %.c
+#	$(CC) -c -o $@ $< $(CFLAGS) 
 
 %.static.o: %.c
 	$(CC) -c -o $@ $< $(STATIC_CFLAGS) $(CFLAGS) 
@@ -101,11 +102,16 @@ $(SOLIBPREFIX)jsonstreamevents$(SOEXT): $(LIBJSONSTREAMEVENTS_OBJ:%.o=%.shared.o
 	$(CC) -o $@ $(OS_LINK_FLAGS) $^ $(LIBJSONSTREAMEVENTS_SHARED_LDFLAGS) $(LIBJSONSTREAMEVENTS_LDFLAGS) $(LDFLAGS) $(LIBS)
 
 utils: $(UTILS_BIN)
+ifeq ($(EXAMPLES),)
+examples: 
+else
+examples: $(EXAMPLES_BIN)
+endif
 
-#src/jsonstreamevents_s$(BINEXT): %$(BINEXT): %.static.o $(LIBPREFIX)jsonstreamevents$(LIBEXT)
-#	$(CC) $(STRIPFLAG) -o $@ $^ $(LIBJSONSTREAMEVENTS_LDFLAGS) $(LDFLAGS)
+$(addsuffix .o,$(basename $(UTILS_BIN) $(EXAMPLES_BIN))): %.o: %.c
+	$(CC) -c -o $@ $< $(SHARED_CFLAGS) $(CFLAGS)
 
-src/jsonstreamevents$(BINEXT): %$(BINEXT): %.shared.o $(SOLIBPREFIX)jsonstreamevents$(SOEXT)
+$(UTILS_BIN) $(EXAMPLES_BIN): %$(BINEXT): %.o $(SOLIBPREFIX)jsonstreamevents$(SOEXT)
 	$(CC) $(STRIPFLAG) -o $@ $^ $(LIBJSONSTREAMEVENTS_LDFLAGS) $(LDFLAGS)
 
 .PHONY: doc
@@ -118,7 +124,9 @@ install: all doc
 	$(MKDIR) $(PREFIX)/include $(PREFIX)/lib $(PREFIX)/bin
 	$(CP) include/*.h $(PREFIX)/include/
 	$(CP) *$(LIBEXT) $(PREFIX)/lib/
+ifneq ($(UTILS_BIN),)
 	$(CP) $(UTILS_BIN) $(PREFIX)/bin/
+endif
 ifeq ($(OS),Windows_NT)
 	$(CP) *$(SOEXT) $(PREFIX)/bin/
 	$(CP) *.def $(PREFIX)/lib/
@@ -135,24 +143,24 @@ version:
 
 .PHONY: package
 package: version
-	tar cfJ ci-test-$(shell cat version).tar.xz --transform="s?^?ci-test-$(shell cat version)/?" $(SOURCE_PACKAGE_FILES)
+	tar cfJ jsonstreamevents-$(shell cat version).tar.xz --transform="s?^?jsonstreamevents-$(shell cat version)/?" $(SOURCE_PACKAGE_FILES)
 
 .PHONY: package
 binarypackage: version
 ifneq ($(OS),Windows_NT)
 	$(MAKE) PREFIX=binarypackage_temp_$(OSALIAS) install
-	tar cfJ ci-test-$(shell cat version)-$(OSALIAS).tar.xz --transform="s?^binarypackage_temp_$(OSALIAS)/??" $(COMMON_PACKAGE_FILES) binarypackage_temp_$(OSALIAS)/*
+	tar cfJ jsonstreamevents-$(shell cat version)-$(OSALIAS).tar.xz --transform="s?^binarypackage_temp_$(OSALIAS)/??" $(COMMON_PACKAGE_FILES) binarypackage_temp_$(OSALIAS)/*
 else
 	$(MAKE) PREFIX=binarypackage_temp_$(OSALIAS) install DOXYGEN=
 	cp -f $(COMMON_PACKAGE_FILES) binarypackage_temp_$(OSALIAS)
-	rm -f ci-test-$(shell cat version)-$(OSALIAS).zip
-	cd binarypackage_temp_$(OSALIAS) && zip -r9 ../ci-test-$(shell cat version)-$(OSALIAS).zip $(COMMON_PACKAGE_FILES) * && cd ..
+	rm -f jsonstreamevents-$(shell cat version)-$(OSALIAS).zip
+	cd binarypackage_temp_$(OSALIAS) && zip -r9 ../jsonstreamevents-$(shell cat version)-$(OSALIAS).zip $(COMMON_PACKAGE_FILES) * && cd ..
 endif
 	rm -rf binarypackage_temp_$(OSALIAS)
 
 .PHONY: clean
 clean:
-	$(RM) src/*.o *$(LIBEXT) *$(SOEXT) $(UTILS_BIN) version ci-test-*.tar.xz doc/doxygen_sqlite3.db
+	$(RM) src/*.o example/*.o *$(LIBEXT) *$(SOEXT) $(UTILS_BIN) version jsonstreamevents-*.tar.xz doc/doxygen_sqlite3.db
 ifeq ($(OS),Windows_NT)
 	$(RM) *.def
 endif
